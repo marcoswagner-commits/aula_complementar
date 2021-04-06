@@ -1,8 +1,14 @@
 package com.marcos.aulapoo.orm.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="ALUNOS")
@@ -13,6 +19,10 @@ public class Aluno extends Pessoa {
 	
 	@Column(nullable = false)
 	private String curso;
+	
+	@ManyToMany(mappedBy = "alunos")
+	
+	private List<Disciplina> disciplinas = new ArrayList<>();
 	
 	public Aluno() {
 		
@@ -38,6 +48,14 @@ public class Aluno extends Pessoa {
 
 	public void setCurso(String curso) {
 		this.curso = curso;
+	}
+
+	public List<Disciplina> getDisciplinas() {
+		return disciplinas;
+	}
+
+	public void setDisciplinas(List<Disciplina> disciplinas) {
+		this.disciplinas = disciplinas;
 	}
 
 	@Override

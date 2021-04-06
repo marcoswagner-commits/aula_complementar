@@ -1,11 +1,19 @@
 package com.marcos.aulapoo.orm.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="DISCIPLINAS")
@@ -20,6 +28,13 @@ public class Disciplina {
 	private String nome;
 	
 	private Integer carga_horaria;
+	
+	@ManyToMany
+	@JoinTable(name="DISCIPLINAS_ALUNOS", 
+	           joinColumns = @JoinColumn(name="disciplina_id"),
+	           inverseJoinColumns = @JoinColumn(name="aluno_id"))
+	@JsonIgnore
+	private List<Aluno> alunos = new ArrayList<>();
 	
 	public Disciplina() {
 		
@@ -50,6 +65,14 @@ public class Disciplina {
 
 	public Integer getCarga_horaria() {
 		return carga_horaria;
+	}
+
+	public List<Aluno> getAlunos() {
+		return alunos;
+	}
+
+	public void setAlunos(List<Aluno> alunos) {
+		this.alunos = alunos;
 	}
 
 	public void setCarga_horaria(Integer carga_horaria) {
